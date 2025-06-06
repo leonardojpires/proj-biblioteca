@@ -1,0 +1,39 @@
+doctype html
+html(lang="pt-br")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Biblioteca
+    link(rel="stylesheet", href="public/css/styles.css")
+  body
+    header
+      h1 Biblioteca Virtual
+      nav
+        ul
+          li: a(href="/") Início
+          li: a(href="/livros/novo") Adicionar Livro
+    main
+      if livros.length
+        h2 Lista de Livros
+        table
+          thead
+            tr
+              th Título
+              th Autor
+              th Gênero
+              th Ações
+          tbody
+            each livro in livros
+              tr
+                td= livro.titulo
+                td= livro.autor
+                td= livro.genero
+                td
+                  a(href=`/livros/${livro.id}/editar`) Editar
+                  |
+                  form(action=`/livros/${livro.id}?_method=DELETE`, method="POST", style="display:inline")
+                    button(type="submit") Excluir
+      else
+        p Nenhum livro cadastrado ainda.
+    footer
+      p © 2025 Biblioteca Virtual
