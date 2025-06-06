@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Livro = require('../database/models/livro');
 const Emprestimo = require('../database/models/emprestimo');
-const Leitor = require('../database/models/leitor');
+const Leitor = require('../database/models/leitor');    
 
 router.get("/", async(req, res) => {
     const livros = await Livro.all();

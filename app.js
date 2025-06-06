@@ -13,11 +13,8 @@ const pagesRoutes = require('./routes/pagesRoutes')
 app.use('/', pagesRoutes);
 
 
-const leitoresRoutes = require('./routes/leitoresRoutes');
-app.use('/leitor', leitoresRoutes);
-
-
-
+app.use('/api/leitores', require('./routes/leitoresRoutes'));
+app.use('/api/livros', require('./routes/livrosRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
