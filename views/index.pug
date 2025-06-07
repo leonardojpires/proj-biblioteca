@@ -1,39 +1,29 @@
-doctype html
-html(lang="pt-br")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Biblioteca
-    link(rel="stylesheet", href="public/css/styles.css")
-  body
-    header
-      h1 Biblioteca Virtual
-      nav
-        ul
-          li: a(href="/") Início
-          li: a(href="/livros/novo") Adicionar Livro
-    main
-      if livros.length
-        h2 Lista de Livros
-        table
-          thead
-            tr
-              th Título
-              th Autor
-              th Gênero
-              th Ações
-          tbody
-            each livro in livros
-              tr
-                td= livro.titulo
-                td= livro.autor
-                td= livro.genero
-                td
-                  a(href=`/livros/${livro.id}/editar`) Editar
-                  |
-                  form(action=`/livros/${livro.id}?_method=DELETE`, method="POST", style="display:inline")
-                    button(type="submit") Excluir
-      else
-        p Nenhum livro cadastrado ainda.
-    footer
-      p © 2025 Biblioteca Virtual
+extends layout/fe_master
+
+block content
+  if livros.length
+    br
+    h2.mb-4.text-primary Lista de Livros
+    table.table.table-striped.table-hover
+      thead.table-dark
+        tr
+          th Título
+          th Autor
+          th Gênero
+          th Ações
+      tbody
+        each livro in livros
+          tr
+            td= livro.titulo
+            td= livro.autor
+            td= livro.genero
+            td
+              a.btn.btn-sm.btn-warning.me-2(href=`/livros/${livro.id}/editar`) Editar
+              button.btn.btn-sm.btn-danger(
+              type="button",
+              onclick=`apagarLivro('${livro.id}')`
+            ) Excluir
+  else
+    div.text-center.mt-5
+      p.text-muted Nenhum livro cadastrado ainda.
+      a.btn.btn-primary.mt-3(href="/livros/novo") Adicionar o primeiro livro
