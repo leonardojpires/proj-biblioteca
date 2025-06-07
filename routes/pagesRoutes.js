@@ -10,4 +10,9 @@ router.get("/", async(req, res) => {
     res.render("index", { livros });
 });
 
+router.get("/leitores", async(req, res) => {
+    const leitores = await Leitor.all();
+    res.render("leitores", { leitores });
+});
+
 module.exports = router;

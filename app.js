@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const pagesRoutes = require('./routes/pagesRoutes')
 app.use('/', pagesRoutes);
+app.use('/leitores', pagesRoutes);
 
 
 app.use('/api/leitores', require('./routes/leitoresRoutes'));

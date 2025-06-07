@@ -20,11 +20,13 @@ html(lang="pt-br")
             ul.nav
               li.nav-item
                 a.nav-link.text-white(href="/") Início
+              li.nav-item 
+                a.nav-link.text-white(href="/leitores") Leitores
 
       main.container.flex-grow-1
         block content
 
-      // Modal para Adicionar Livro - dentro do body, depois do main e antes do footer
+      // Modal para Adicionar/Editar Livro
       div.modal.fade(id="modalNovoLivro", tabindex="-1", aria-labelledby="modalNovoLivroLabel", aria-hidden="true")
         div.modal-dialog
           div.modal-content
@@ -46,9 +48,27 @@ html(lang="pt-br")
               button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
               button.btn.btn-primary(type="submit", form="formNovoLivro") Submeter
 
+      // Modal para Adicionar/Editar Leitor
+      div.modal.fade(id="modalNovoLeitor", tabindex="-1", aria-labelledby="modalNovoLeitorLabel", aria-hidden="true")
+        div.modal-dialog
+          div.modal-content
+            div.modal-header
+              h5.modal-title#modalNovoLeitorLabel Adicionar/Editar Leitor
+              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Fechar")
+            div.modal-body
+              form#formNovoLeitor
+                div.mb-3
+                  label.form-label(for="nome") Nome
+                  input.form-control(type="text", id="nome", name="nome", required)
+                div.mb-3
+                  label.form-label(for="email") Email
+                  input.form-control(type="email", id="email", name="email", required)
+            div.modal-footer
+              button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
+              button.btn.btn-primary(type="submit", form="formNovoLeitor") Submeter
+
       footer.bg-light.text-center.py-3.mt-5
         p.mb-0 © 2025 Biblioteca Virtual
 
-      // Scripts JS no final do body, para garantir que o DOM está carregado
       script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js", crossorigin="anonymous")
       script(src="/js/app.js")
