@@ -1,0 +1,47 @@
+extends layout/fe_master
+
+block content
+  .d-flex.justify-content-between.align-items-center
+    h2.mb-4.text-primary Lista de Empréstimos
+
+    .text-end
+      a.btn.btn-primary.btn-lg(
+        data-bs-toggle="modal",
+        data-bs-target="#modalNovoEmprestimo"
+      ) + Novo Empréstimo
+
+  if emprestimos.length
+    br
+    table.table.table-striped.table-hover.mt-3
+      thead.table-dark
+        tr
+          th Leitor
+          th Livro
+          th Data Empréstimo
+          th Data Devolução
+          th.text-end Ações
+      tbody
+        each emprestimo in emprestimos
+          tr
+            td= emprestimo.leitor_nome
+            td= emprestimo.livro_titulo
+            td= new Date(emprestimo.data_emprestimo).toLocaleDateString('pt-PT')
+            td= emprestimo.data_devolucao ? new Date(emprestimo.data_devolucao).toLocaleDateString('pt-PT') : ''
+            td.text-end
+              a.btn.btn-warning.btn-sm.me-2(
+                href="#",
+                data-bs-toggle="modal",
+                data-bs-target="#modalNovoEmprestimo",
+                data-id=emprestimo.id,
+                data-id_leitor=emprestimo.leitor_id,
+                data-id_livro=emprestimo.livro_id,
+                data-data_devolucao=emprestimo.data_devolucao
+              ) Editar
+              button.btn.btn-danger.btn-sm(
+                type="button",
+                onclick=`apagarEmprestimo('${emprestimo.id}')`
+              ) Excluir
+
+  else
+    .text-center.mt-5
+      p.text-muted Nenhum empréstimo cadastrado ainda.

@@ -1,5 +1,37 @@
 /* styles.css */
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body > .d-flex {
+  min-height: 100vh;  /* Garante que ocupe toda a altura da viewport */
+  flex-direction: row;
+}
+
+aside.vh-100 {
+  height: 100vh;  /* Garantir que sidebar ocupe a altura toda */
+  overflow-y: auto;
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #222; 
+  color: white;
+  z-index: 1030; 
+}
+
+.flex-grow-1 {
+  margin-left: 240px; 
+  min-height: 100vh;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
@@ -91,3 +123,7 @@ footer {
   font-size: 0.9rem;
   color: #666;
 }
+
+
+
+

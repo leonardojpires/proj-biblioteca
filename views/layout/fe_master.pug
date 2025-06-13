@@ -2,73 +2,127 @@ doctype html
 html(lang="pt-br")
   head
     meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Biblioteca #{title}
-    link(rel="stylesheet", href="/css/styles.css")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Biblioteca Virtual 
+    link(rel="stylesheet" href="/css/styles.css")
     link(
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css",
       rel="stylesheet",
       integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT",
       crossorigin="anonymous"
     )
-  body
-    .d-flex.flex-column.min-vh-100
-      header.bg-dark.text-white.py-4
-        .container
-          h1.mb-0 Biblioteca Virtual
-          nav.mt-2
-            ul.nav
-              li.nav-item
-                a.nav-link.text-white(href="/") Início
-              li.nav-item 
-                a.nav-link.text-white(href="/leitores") Leitores
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css")
 
-      main.container.flex-grow-1
+  body
+  .d-flex
+    // Sidebar - desktop fixo, mobile escondido por padrão
+    aside.bg-dark.text-white.p-3.vh-100.shadow-sm.d-none.d-md-block(style="width: 240px; overflow-y: auto;")
+      h2.fs-4.mb-4.text-center Biblioteca
+      ul.nav.flex-column
+        li.nav-item.mb-2
+          a.nav-link.text-white(href="/")
+            i.bi.bi-book-half.me-2
+            | Livros
+        li.nav-item.mb-2
+          a.nav-link.text-white(href="/leitores")
+            i.bi.bi-person-fill.me-2
+            | Leitores
+        li.nav-item.mb-2
+          a.nav-link.text-white(href="/emprestimos")
+            i.bi.bi-journal-check.me-2
+            | Empréstimos
+
+    // Main content area
+    .flex-grow-1.d-flex.flex-column.min-vh-100
+      // Header com botão hamburguer só mobile
+      header.bg-light.d-flex.align-items-center.p-2.shadow-sm.d-md-none
+        button.btn.btn-primary(type="button" id="btnToggleSidebar")
+          i.bi.bi-list
+
+        h1.fs-5.ms-3.mb-0 Biblioteca Virtual
+
+      main.container.my-4
         block content
 
-      // Modal para Adicionar/Editar Livro
-      div.modal.fade(id="modalNovoLivro", tabindex="-1", aria-labelledby="modalNovoLivroLabel", aria-hidden="true")
-        div.modal-dialog
-          div.modal-content
-            div.modal-header
-              h5.modal-title#modalNovoLivroLabel Adicionar/Editar Livro
-              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Fechar")
-            div.modal-body
-              form#formNovoLivro
-                div.mb-3
-                  label.form-label(for="titulo") Título
-                  input.form-control(type="text", id="titulo", name="titulo", required)
-                div.mb-3
-                  label.form-label(for="autor") Autor
-                  input.form-control(type="text", id="autor", name="autor", required)
-                div.mb-3
-                  label.form-label(for="genero") Gênero
-                  input.form-control(type="text", id="genero", name="genero", required)
-            div.modal-footer
-              button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
-              button.btn.btn-primary(type="submit", form="formNovoLivro") Submeter
+      footer.bg-light.text-center.py-3.mt-auto.border-top
+        p.mb-0.text-muted © 2025 Biblioteca Virtual
 
-      // Modal para Adicionar/Editar Leitor
-      div.modal.fade(id="modalNovoLeitor", tabindex="-1", aria-labelledby="modalNovoLeitorLabel", aria-hidden="true")
-        div.modal-dialog
-          div.modal-content
-            div.modal-header
-              h5.modal-title#modalNovoLeitorLabel Adicionar/Editar Leitor
-              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Fechar")
-            div.modal-body
-              form#formNovoLeitor
-                div.mb-3
-                  label.form-label(for="nome") Nome
-                  input.form-control(type="text", id="nome", name="nome", required)
-                div.mb-3
-                  label.form-label(for="email") Email
-                  input.form-control(type="email", id="email", name="email", required)
-            div.modal-footer
-              button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancelar
-              button.btn.btn-primary(type="submit", form="formNovoLeitor") Submeter
 
-      footer.bg-light.text-center.py-3.mt-5
-        p.mb-0 © 2025 Biblioteca Virtual
+    // VARIÁVEIS
+    - var leitores = typeof leitores !== 'undefined' ? leitores : []
+    - var livros = typeof livros !== 'undefined' ? livros : []
 
-      script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js", crossorigin="anonymous")
-      script(src="/js/app.js")
+    // MODAIS
+    .modal.fade#modalNovoLivro(tabindex="-1" aria-labelledby="modalNovoLivroLabel" aria-hidden="true")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5.modal-title#modalNovoLivroLabel Adicionar/Editar Livro
+            button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Fechar")
+          .modal-body
+            form#formNovoLivro
+              .mb-3
+                label.form-label(for="titulo") Título
+                input.form-control(type="text" id="titulo" name="titulo" required)
+              .mb-3
+                label.form-label(for="autor") Autor
+                input.form-control(type="text" id="autor" name="autor" required)
+              .mb-3
+                label.form-label(for="genero") Gênero
+                input.form-control(type="text" id="genero" name="genero" required)
+          .modal-footer
+            button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+            button.btn.btn-primary(type="submit" form="formNovoLivro") Submeter
+
+    .modal.fade#modalNovoLeitor(tabindex="-1" aria-labelledby="modalNovoLeitorLabel" aria-hidden="true")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5.modal-title#modalNovoLeitorLabel Adicionar/Editar Leitor
+            button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Fechar")
+          .modal-body
+            form#formNovoLeitor
+              .mb-3
+                label.form-label(for="nome") Nome
+                input.form-control(type="text" id="nome" name="nome" required)
+              .mb-3
+                label.form-label(for="email") Email
+                input.form-control(type="email" id="email" name="email" required)
+          .modal-footer
+            button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+            button.btn.btn-primary(type="submit" form="formNovoLeitor") Submeter
+
+    .modal.fade#modalNovoEmprestimo(tabindex="-1" aria-labelledby="modalNovoEmprestimoLabel" aria-hidden="true")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5.modal-title#modalNovoEmprestimoLabel Adicionar/Editar Empréstimo
+            button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Fechar")
+          .modal-body
+            form#formNovoEmprestimo
+              input(type="hidden" id="id" name="id")
+              .mb-3
+                label.form-label(for="leitor_id") Leitor
+                select.form-select(id="leitor_id" name="leitor_id" required)
+                  option(value="" disabled selected) Selecione um leitor
+                  each leitor in leitores
+                    option(value=leitor.id)= leitor.nome
+              .mb-3
+                label.form-label(for="livro_id") Livro
+                select.form-select(id="livro_id" name="livro_id" required)
+                  option(value="" disabled selected) Selecione um livro
+                  each livro in livros
+                    option(value=livro.id)= livro.titulo
+              .mb-3
+                label.form-label(for="data_emprestimo") Data Empréstimo
+                input.form-control(type="date" id="data_emprestimo" name="data_emprestimo" required)
+              .mb-3
+                label.form-label(for="data_devolucao") Data Devolução
+                input.form-control(type="date" id="data_devolucao" name="data_devolucao")
+          .modal-footer
+            button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+            button.btn.btn-primary(type="submit" form="formNovoEmprestimo") Submeter
+
+    // JS
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js", crossorigin="anonymous")
+    script(src="/js/app.js")

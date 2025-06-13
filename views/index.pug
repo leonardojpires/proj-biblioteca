@@ -1,12 +1,18 @@
 extends layout/fe_master
 
 block content
+  .d-flex.justify-content-between.align-items-center
+    h2.mb-4.text-primary Lista de Livros
+
+    .text-end
+      a.btn.btn-primary.btn-lg(
+        data-bs-toggle="modal",
+        data-bs-target="#modalNovoLivro"
+      ) + Novo Livro
+
   if livros.length
     br
-    h2.mb-4.text-primary Lista de Livros
-    div.text-end
-      a.btn.btn-sm.btn-primary.btn-lg(data-bs-toggle="modal", data-bs-target="#modalNovoLivro") + Novo Livro
-    table.table.table-striped.table-hover
+    table.table.table-striped.table-hover.mt-3
       thead.table-dark
         tr
           th Título
@@ -19,9 +25,8 @@ block content
             td= livro.titulo
             td= livro.autor
             td= livro.genero
-            td
-              div.text-end
-                a.btn.btn-sm.btn-warning.me-2(
+            td.text-end
+              a.btn.btn-warning.btn-sm.me-2(
                 href="#",
                 data-bs-toggle="modal",
                 data-bs-target="#modalNovoLivro",
@@ -30,13 +35,10 @@ block content
                 data-autor=livro.autor,
                 data-genero=livro.genero
               ) Editar
-                button.btn.btn-sm.btn-danger(
+              button.btn.btn-danger.btn-sm(
                 type="button",
                 onclick=`apagarLivro('${livro.id}')`
               ) Excluir
-              
-
   else
-    div.text-center.mt-5
+    .text-center.mt-5
       p.text-muted Nenhum livro cadastrado ainda.
-

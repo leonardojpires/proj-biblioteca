@@ -14,10 +14,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 const pagesRoutes = require('./routes/pagesRoutes')
 app.use('/', pagesRoutes);
 app.use('/leitores', pagesRoutes);
+app.use('/emprestimos', pagesRoutes);
 
 
 app.use('/api/leitores', require('./routes/leitoresRoutes'));
 app.use('/api/livros', require('./routes/livrosRoutes'));
+app.use('/api/emprestimos', require('./routes/emprestimosRoutes'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

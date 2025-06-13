@@ -35,7 +35,8 @@ class Emprestimo {
   }
 
   static async delete(id) {
-    await db.query('DELETE FROM emprestimos WHERE id = ?', [id]);
+    const [result] = await db.query('DELETE FROM emprestimos WHERE id = ?', [id]);
+    return result.affectedRows > 0;
   }
 }
 
